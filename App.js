@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View ,ListView} from 'react-native';
+import { StyleSheet, Text, View ,ListView,TouchableHighlight} from 'react-native';
 
 
 export default class App extends React.Component {
@@ -10,18 +10,38 @@ export default class App extends React.Component {
       itemDataSource : ds
     }
   }
+
+  componentWillMount(){
+    this.getItems();
+  }
+  componentDidMount(){
+    this.getItems();
+  }
   getItems(){
     let items = [{title:'One'}, {title:'Two'}];
     this.setState({
       itemDataSource : this.state.itemDataSource.cloneWithRows(items)
     });
   }
+  renderRow(item){
+    return(
+      <TouchableHighlight
+
+      >
+        <View>
+            <Text>{item.title}</Text>
+        </View>
+
+      </TouchableHighlight>
+    );
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <ListView 
+          dataSource = {this.state.itemDataSource}
+          renderRow = {this.renderRow}
+        />
       </View>
     );
   }
