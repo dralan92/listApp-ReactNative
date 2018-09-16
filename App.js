@@ -1,7 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View ,ListView} from 'react-native';
+
 
 export default class App extends React.Component {
+  constructor(){
+    super();
+    let ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>r1 !== r2});
+    this.state = {
+      itemDataSource : ds
+    }
+  }
+  getItems(){
+    let items = [{title:'One'}, {title:'Two'}];
+    this.setState({
+      itemDataSource : this.state.itemDataSource.cloneWithRows(items)
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
