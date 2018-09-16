@@ -1,57 +1,31 @@
 import React from 'react';
 import { StyleSheet, Text, View ,ListView,TouchableHighlight} from 'react-native';
+import { createStackNavigator } from 'react-navigation';
+import List from './components/List';
+import Home from './components/Home';
 
 
-export default class App extends React.Component {
-  constructor(){
-    super();
-    let ds = new ListView.DataSource({rowHasChanged: (r1,r2)=>r1 !== r2});
-    this.state = {
-      itemDataSource : ds
-    }
-  }
-
-  componentWillMount(){
-    this.getItems();
-  }
-  componentDidMount(){
-    this.getItems();
-  }
-  getItems(){
-    let items = [{title:'One'}, {title:'Two'}];
-    this.setState({
-      itemDataSource : this.state.itemDataSource.cloneWithRows(items)
-    });
-  }
-  renderRow(item){
-    return(
-      <TouchableHighlight
-
-      >
-        <View>
-            <Text>{item.title}</Text>
-        </View>
-
-      </TouchableHighlight>
-    );
-  }
+class App extends React.Component {
+  
+  
   render() {
     return (
-      <View style={styles.container}>
-        <ListView 
-          dataSource = {this.state.itemDataSource}
-          renderRow = {this.renderRow}
-        />
-      </View>
+      <RootStack/>
     );
   }
+
+  
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const RootStack = createStackNavigator({
+  Home: {
+    screen : Home
   },
-});
+  List : {
+    screen : List
+  }
+    
+},
+);
+
+export default App;
