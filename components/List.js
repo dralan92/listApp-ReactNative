@@ -24,8 +24,14 @@ class List extends React.Component {
         this.state = {
           itemDataSource : ds
         }
+
+        this.itemRef = this.getRef().child('shit');
       }
     
+      getRef(){
+        return firebaseApp.database().ref();
+      }
+
       componentWillMount(){
         this.getItems();
       }
@@ -33,10 +39,21 @@ class List extends React.Component {
         this.getItems();
       }
       getItems(){
-        let items = [{title:'One'}, {title:'Two'}];
-        this.setState({
-          itemDataSource : this.state.itemDataSource.cloneWithRows(items)
+        //let items = [{title:'One'}, {title:'Two'}];
+        this.itemRef.on('value', (snap)=>{
+          let items = [];
+          snap.forEach((child)=>{
+            items.push({
+              title: child.val().title,
+              _key: child.key
+            });
+            this.setState({
+              itemDataSource : this.state.itemDataSource.cloneWithRows(items)
+            });
+          });
         });
+        
+        
       }
 
     renderRow(item){
@@ -46,6 +63,7 @@ class List extends React.Component {
           >
             <View>
                 <Text>{firebaseApp.name}</Text>
+                
                 <Text>{item.title}</Text>
             </View>
     
