@@ -15,7 +15,7 @@ class List extends React.Component {
           itemDataSource : ds
         }
 
-        this.itemRef = this.getRef().child('shit');
+        this.itemRef = this.getRef().child('users');
       }
     
       getRef(){
@@ -31,14 +31,18 @@ class List extends React.Component {
       getItems(){
         //let items = [{title:'One'}, {title:'Two'}];
         this.itemRef.on('value', (snap)=>{
-          let items = [];
+          let users = [];
           snap.forEach((child)=>{
-            items.push({
-              title: child.val().title,
+            users.push({
+              username: child.val().username,
+              gender: child.val().gender,
+              email: child.val().email,
+              phone: child.val().phone,
+              age: child.val().age,
               _key: child.key
             });
             this.setState({
-              itemDataSource : this.state.itemDataSource.cloneWithRows(items)
+              itemDataSource : this.state.itemDataSource.cloneWithRows(users)
             });
           });
         });
@@ -46,15 +50,19 @@ class List extends React.Component {
         
       }
 
-    renderRow(item){
+    renderRow(users){
         return(
           <TouchableHighlight
-    
+          style={styles.touchableHighlightStyle}
           >
             <View>
                 
                 
-                <Text>{item.title}</Text>
+                <Text>Username : {users.username}</Text>
+                <Text>Gender : {users.gender}</Text>
+                <Text>Age : {users.age}</Text>
+                <Text>Email : {users.email}</Text>
+                <Text>Phone : {users.phone}</Text>
             </View>
     
           </TouchableHighlight>
@@ -75,14 +83,26 @@ class List extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+
+  
+const styles = StyleSheet.create(
+  {
+    touchableHighlightStyle: {
+      color: '#42c8f4',
+      fontSize: 30,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginTop: 5, 
+      marginBottom: 5,
+      width: '100%',
+      backgroundColor: 'yellow',
+    },
     container: {
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
     },
-  });
-  
-
+  }
+);
   export default List;
