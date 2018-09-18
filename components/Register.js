@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View ,ListView,TouchableHighlight,Button,Picker} from 'react-native';
+import { StyleSheet, Text, View ,ListView,TouchableHighlight,Button,Picker,TouchableOpacity} from 'react-native';
 import { TextInput } from '../node_modules/react-native-gesture-handler';
 import { createStackNavigator } from 'react-navigation';
 import  firebaseApp from "../Firebase";
@@ -51,10 +51,13 @@ export default class Register extends Component {
                     onChangeText={(text) => this.setState({phone: text})}/>
         <TextInput underlineColorAndroid='transparent' style={styles.textInputStyle} placeholder='age' value={this.state.age}
                     onChangeText={(text) => this.setState({age: text})}/>
-        <Button style={styles.regButtonStyle}
-          title="Register"
-          onPress={() => this.usersRef.push(this.state)}
-        />
+        
+         <TouchableOpacity
+            style={styles.listButton}
+            onPress={() => this.usersRef.push(this.state)}
+          >
+            <Text> REGISTER </Text>
+        </TouchableOpacity>
         <Text>{this.state.username}</Text>
         </View>
     )
@@ -99,5 +102,16 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '100%',
         backgroundColor: '#f4414a',
+      },
+      listButton : {
+    
+        backgroundColor : '#42c8f4',
+        height: 60,
+        width: '100%',
+       color:'yellow',
+        padding : 10 ,
+        textAlign: 'right', 
+        alignSelf: 'stretch'
+       
       },
   });
