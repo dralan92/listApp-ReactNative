@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View ,ListView,TouchableHighlight} from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import  firebaseApp from "../Firebase";
+import Home from './Home';
 
 class List extends React.Component {
     static navigationOptions = {
@@ -60,12 +61,15 @@ class List extends React.Component {
         );
       }
   render() {
+    const { navigation } = this.props;
+    const username = navigation.getParam('username', 'unknown');
     return (
         <View style={styles.container}>
         <ListView 
           dataSource = {this.state.itemDataSource}
           renderRow = {this.renderRow}
         />
+        <Text>{username}</Text>
       </View>
     )
   }
